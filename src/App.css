@@ -427,9 +427,10 @@
   }
 
   .status-indicator {
-    justify-content: center;
+    /* justify-content: center;
     margin: 0 auto;
-    max-width: 200px;
+    max-width: 200px; */
+    display: none;
   }
 }
 

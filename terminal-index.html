@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Retro Terminal Animation</title>
+    <style>
+      body {
+        background: #0a0a0f;
+        color: #00ff41;
+        font-family: "Share Tech Mono", "Courier New", monospace;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .terminal {
+        background: rgba(0, 0, 0, 0.95);
+        border: 2px solid #00ff41;
+        border-radius: 10px;
+        box-shadow: 0 0 30px #00ff4144;
+        padding: 2rem;
+        width: 500px;
+        max-width: 90vw;
+        min-height: 300px;
+        font-size: 1.1rem;
+        position: relative;
+      }
+      .terminal-header {
+        color: #0a0a0f;
+        background: #00ff41;
+        padding: 0.5rem 1rem;
+        font-weight: bold;
+        border-radius: 8px 8px 0 0;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        letter-spacing: 2px;
+      }
+      .terminal-line.command {
+        color: #00ff41;
+      }
+      .terminal-line.output {
+        color: #cccccc;
+        margin-left: 1rem;
+      }
+      .terminal-cursor {
+        display: inline-block;
+        width: 1ch;
+        animation: blink 1s steps(1) infinite;
+      }
+      @keyframes blink {
+        0%,
+        50% {
+          opacity: 1;
+        }
+        51%,
+        100% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="terminal">
+      <div class="terminal-header">TERMINAL.EXE</div>
+      <div id="terminal-content"></div>
+    </div>
+    <script>
+      const terminalCommands = [
+        "> whoami",
+        "ngawang_tenzin",
+        "> cat skills.txt",
+        "React.js | Node.js | Python | TypeScript",
+        "> ls projects/",
+        "barma-sorig-web-app/ | quiz-mobile-app/ | portfolio-website/",
+        "> status",
+        "AVAILABLE FOR HIRE",
+        '> echo "Let\'s build something amazing!"',
+        "Let's build something amazing!",
+      ];
+      const terminalContent = document.getElementById("terminal-content");
+      let lineIndex = 0;
+      let charIndex = 0;
+      let isTyping = false;
+      let lines = [];
+      function typeLine() {
+        if (lineIndex >= terminalCommands.length) {
+          setTimeout(() => {
+            lines = [];
+            lineIndex = 0;
+            charIndex = 0;
+            terminalContent.innerHTML = "";
+            typeLine();
+          }, 3000);
+          return;
+        }
+        const line = terminalCommands[lineIndex];
+        isTyping = true;
+        let current = "";
+        function typeChar() {
+          if (charIndex < line.length) {
+            current += line[charIndex];
+            terminalContent.innerHTML =
+              lines.join("") +
+              `<div class='terminal-line ${
+                line.startsWith(">") ? "command" : "output"
+              }'>${current}<span class='terminal-cursor'>_</span></div>`;
+            charIndex++;
+            setTimeout(typeChar, 30);
+          } else {
+            lines.push(
+              `<div class='terminal-line ${
+                line.startsWith(">") ? "command" : "output"
+              }'>${line}</div>`
+            );
+            terminalContent.innerHTML = lines.join("");
+            lineIndex++;
+            charIndex = 0;
+            isTyping = false;
+            setTimeout(typeLine, 800);
+          }
+        }
+        typeChar();
+      }
+      typeLine();
+    </script>
+  </body>
+</html>

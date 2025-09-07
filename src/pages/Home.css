@@ -1486,6 +1486,10 @@ body {
         padding: 1rem;
     }
 
+    .retro-specs {
+        left: 56.5%;
+    }
+
     .terminal-body {
         height: 200px;
     }

@@ -332,7 +332,7 @@ const Home: React.FC<HomeProps> = ({ isRetroMode = false }) => {
                 <div className="info-items">
                   <div className="info-item">
                     <span className="info-label">Experience:</span>
-                    <span className="info-value">{'< '}1 Year</span>
+                    <span className="info-value">{'< '}2 Years</span>
                   </div>
                   <div className="info-item">
                     <span className="info-label">Projects:</span>
