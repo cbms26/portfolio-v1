@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import ExternalLink from '../utils/ExternalLink';
 import './Home.css';
-
 import Profile from '../assets/profile.jpg';
 import { useScrollEnd } from '../utils/UseScrollEnd';
+import Header from "../components/Header";
 
 interface HomeProps {
   isRetroMode?: boolean;
@@ -11,16 +11,10 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ isRetroMode = false }) => {
   const atEnd = useScrollEnd();
-  const [currentTime, setCurrentTime] = useState(new Date());
   const [displayText, setDisplayText] = useState('NGAWANG TENZIN');
   const [terminalLines, setTerminalLines] = useState([] as string[]);
 
   useEffect(() => {
-    // Update time every second
-    const timeInterval = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-
     let glitchInterval: ReturnType<typeof setInterval> | undefined;
     let terminalInterval: ReturnType<typeof setInterval> | undefined;
     let lineIndex = 0;
@@ -80,30 +74,10 @@ const Home: React.FC<HomeProps> = ({ isRetroMode = false }) => {
 
     return () => {
   // Removed scroll indicator cleanup (handled by useScrollEnd)
-      clearInterval(timeInterval);
       if (glitchInterval) clearInterval(glitchInterval);
       if (terminalInterval) clearInterval(terminalInterval);
     };
   }, [isRetroMode]);
-
-  const formatTime = (date: Date) => {
-    const options = {
-      hour12: false,
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    } as const;
-    return date.toLocaleTimeString('en-UK', options);
-  };
-
-  const formatDate = (date: Date) => {
-    const options = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    } as const;
-    return date.toLocaleDateString('en-UK', options);
-  };
 
   return (
     <div className={isRetroMode ? 'home-container retro-mode' : 'home-container professional-mode'}>
@@ -138,20 +112,7 @@ const Home: React.FC<HomeProps> = ({ isRetroMode = false }) => {
       ) : null}
 
       {/* Header with Digital Clock */}
-      <header className="header">
-        <div className="clock-section">
-          <div className="clock-display">
-            <span className="time">{formatTime(currentTime)}</span>
-            <span className="date">{formatDate(currentTime)}</span>
-          </div>
-          <div className="status-section">
-            <span className="status-dot"></span>
-            <span className="status-text">
-              {isRetroMode ? 'SYSTEM ONLINE' : 'Available for Work'}
-            </span>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Main Content */}
       <main className="main-content">
