@@ -1,0 +1,23 @@
+.header {
+    padding: 1.2rem;
+
+    background-color: aquamarine;
+}
+
+.header ul {
+    display: flex;
+    gap: 2.4rem;
+    justify-content: flex-end;
+    width: 80%;
+}
+
+ul li {
+    padding: 6px;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+ul li:hover {
+    background-color: gray;
+    cursor: pointer;
+}
